@@ -17,12 +17,14 @@
 #define LV_OS_WINDOWS       5
 #define LV_OS_MQX           6
 #define LV_OS_SDL2          7
+#define LV_OS_CHIBIOS       8
 #define LV_OS_CUSTOM        255
 
 #define LV_STDLIB_BUILTIN           0
 #define LV_STDLIB_CLIB              1
 #define LV_STDLIB_MICROPYTHON       2
 #define LV_STDLIB_RTTHREAD          3
+#define LV_STDLIB_CHIBIOS           4
 #define LV_STDLIB_CUSTOM            255
 
 #define LV_DRAW_SW_ASM_NONE         0
@@ -265,6 +267,7 @@
  * - LV_OS_WINDOWS
  * - LV_OS_MQX
  * - LV_OS_SDL2
+ * - LV_OS_CHIBIOS
  * - LV_OS_CUSTOM */
 #ifndef LV_USE_OS
     #ifdef CONFIG_LV_USE_OS

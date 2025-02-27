@@ -423,7 +423,11 @@ static void _dave2d_render_thread_cb(void * ptr)
 
     lv_thread_sync_init(&u->sync);
 
+#if LV_USE_OS == LV_OS_CHIBIOS
+    while(!chThdShouldTerminateX()) {
+#else
     while(1) {
+#endif
         while(u->task_act == NULL) {
             lv_thread_sync_wait(&u->sync);
         }
@@ -439,6 +443,9 @@ static void _dave2d_render_thread_cb(void * ptr)
         /*The draw unit is free now. Request a new dispatching as it can get a new task*/
         lv_draw_dispatch_request();
     }
+#if LV_USE_OS == LV_OS_CHIBIOS
+    chThdExit(MSG_OK);
+#endif
 }
 #endif
 

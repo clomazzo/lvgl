@@ -38,6 +38,7 @@
  * - LV_STDLIB_CLIB:        Standard C functions, like malloc, strlen, etc
  * - LV_STDLIB_MICROPYTHON: MicroPython implementation
  * - LV_STDLIB_RTTHREAD:    RT-Thread implementation
+ * - LV_STDLIB_CHIBIOS:     ChibiOS implementation
  * - LV_STDLIB_CUSTOM:      Implement the functions externally
  */
 #define LV_USE_STDLIB_MALLOC    LV_STDLIB_BUILTIN
@@ -56,6 +57,7 @@
  * - LV_STDLIB_CLIB:        Standard C functions, like malloc, strlen, etc
  * - LV_STDLIB_MICROPYTHON: MicroPython implementation
  * - LV_STDLIB_RTTHREAD:    RT-Thread implementation
+ * - LV_STDLIB_CHIBIOS:     ChibiOS implementation
  * - LV_STDLIB_CUSTOM:      Implement the functions externally
  */
 #define LV_USE_STDLIB_SPRINTF   LV_STDLIB_BUILTIN
@@ -106,6 +108,7 @@
  * - LV_OS_WINDOWS
  * - LV_OS_MQX
  * - LV_OS_SDL2
+ * - LV_OS_CHIBIOS
  * - LV_OS_CUSTOM */
 #define LV_USE_OS   LV_OS_NONE
 

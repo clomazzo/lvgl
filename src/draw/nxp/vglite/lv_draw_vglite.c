@@ -548,7 +548,11 @@ static void _vglite_render_thread_cb(void * ptr)
     lv_thread_sync_init(&u->sync);
     u->inited = true;
 
+#if LV_USE_OS == LV_OS_CHIBIOS
+    while(!chThdShouldTerminateX()) {
+#else
     while(1) {
+#endif
         /* Wait for sync if there is no task set. */
         while(u->task_act == NULL
 #if LV_USE_VGLITE_DRAW_ASYNC
@@ -603,6 +607,9 @@ static void _vglite_render_thread_cb(void * ptr)
         lv_draw_dispatch_request();
     }
 
+#if LV_USE_OS == LV_OS_CHIBIOS
+    chThdExit(MSG_OK);
+#endif
     u->inited = false;
     lv_thread_sync_delete(&u->sync);
     LV_LOG_INFO("Exit VGLite draw thread.");

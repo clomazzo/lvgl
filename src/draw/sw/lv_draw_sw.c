@@ -221,7 +221,11 @@ static void render_thread_cb(void * ptr)
     lv_thread_sync_init(&u->sync);
     u->inited = true;
 
+#if LV_USE_OS == LV_OS_CHIBIOS
+    while(!chThdShouldTerminateX()) {
+#else
     while(1) {
+#endif
         while(u->task_act == NULL) {
             if(u->exit_status) {
                 break;
@@ -239,7 +243,10 @@ static void render_thread_cb(void * ptr)
 
     u->inited = false;
     lv_thread_sync_delete(&u->sync);
-    LV_LOG_INFO("exit software rendering thread");
+
+#if LV_USE_OS == LV_OS_CHIBIOS
+    chThdExit(MSG_OK);
+#endif
 }
 #endif
 

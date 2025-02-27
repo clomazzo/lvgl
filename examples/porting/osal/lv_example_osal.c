@@ -81,7 +81,11 @@ static void increment_thread_entry(void * user_data)
     lv_label_set_text_fmt(counter_label, "Pressed %" LV_PRIu32 " times", press_count);
     lv_unlock();
 
+#if LV_USE_OS == LV_OS_CHIBIOS
+    while(!chThdShouldTerminateX()) {
+#else
     while(true) {
+#endif
         if(lv_thread_sync_wait(&press_sync) != LV_RESULT_OK) {
             LV_LOG_ERROR("Error awaiting thread sync");
         }
@@ -91,6 +95,9 @@ static void increment_thread_entry(void * user_data)
         lv_label_set_text_fmt(counter_label, "Pressed %" LV_PRIu32 " times", press_count);
         lv_unlock();
     }
+#if LV_USE_OS == LV_OS_CHIBIOS
+    chThdExit(MSG_OK);
+#endif
 }
 
 

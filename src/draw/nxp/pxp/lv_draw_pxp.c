@@ -457,7 +457,11 @@ static void _pxp_render_thread_cb(void * ptr)
     lv_thread_sync_init(&u->sync);
     u->inited = true;
 
+#if LV_USE_OS == LV_OS_CHIBIOS
+    while(!chThdShouldTerminateX()) {
+#else
     while(1) {
+#endif
         /* Wait for sync if there is no task set. */
         while(u->task_act == NULL) {
             if(u->exit_status)
@@ -483,6 +487,9 @@ static void _pxp_render_thread_cb(void * ptr)
         lv_draw_dispatch_request();
     }
 
+#if LV_USE_OS == LV_OS_CHIBIOS
+    chThdExit(MSG_OK);
+#endif
     u->inited = false;
     lv_thread_sync_delete(&u->sync);
     LV_LOG_INFO("Exit PXP draw thread.");
